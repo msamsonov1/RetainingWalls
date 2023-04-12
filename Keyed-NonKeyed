@@ -1,0 +1,20 @@
+import math
+
+# Input parameters
+wall_height = float(input("Enter the height of the retaining wall in feet: "))
+backfill_density = 120.0 # pcf
+phi = float(input("Enter the angle of internal friction for the backfill soil in degrees: "))
+pa = float(input("Enter the active pressure of the backfill soil in pounds per square foot: "))
+pp = float(input("Enter the passive pressure of the backfill soil in pounds per square foot: "))
+
+# Calculation of sliding resistance
+active_resistance = pa * (1 - math.sin(math.radians(phi)))
+passive_resistance = pp * (1 + math.sin(math.radians(phi)))
+sliding_resistance = (active_resistance + passive_resistance) * wall_height
+
+# Determine whether to use a keyed or non-keyed retaining wall
+friction_angle = math.degrees(math.atan(sliding_resistance / (backfill_density * wall_height**2)))
+if friction_angle < phi:
+    print("Use a keyed retaining wall.")
+else:
+    print("Use a non-keyed retaining wall.")
